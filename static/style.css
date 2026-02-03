@@ -1,0 +1,63 @@
+:root {
+    /* Photography Palette */
+    --primary: #0f3d2e;       /* Deep green */
+    --accent: #7a3e2b;        /* Terracotta */
+    --success: #6b8f71;       /* Soft forest green */
+    --bg: #faf5ef;            /* Cream background */
+    --card-bg: #ffffff;
+    --text-main: #0f3d2e;     /* Deep green text */
+    --text-muted: #9b8579;   /* Warm muted brown */
+    --radius: 12px;           /* Consistent rounding */
+}
+
+body { 
+    font-family: 'Inter', -apple-system, sans-serif; 
+    background-color: var(--bg); 
+    color: var(--text-main);
+    margin: 0; 
+}
+
+/* Consistent Buttons */
+.btn {
+    display: inline-block;
+    padding: 12px 24px;
+    background: var(--accent);
+    color: #ffffff;
+    border-radius: var(--radius);
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.2s ease;
+    border: none;
+    cursor: pointer;
+    text-align: center;
+}
+.btn:hover { 
+    background: #8a4a35;   /* lighter terracotta */
+    transform: translateY(-1px); 
+}
+
+/* Consistent Card Styling */
+.card {
+    background: var(--card-bg);
+    border-radius: var(--radius);
+    box-shadow: 0 6px 16px rgba(122, 62, 43, 0.08);
+    overflow: hidden;
+    border: 1px solid #eadfd6; /* warm border */
+}
+
+/* Image Consistency */
+.img-fluid {
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+}
+
+/* Navigation */
+nav {
+    background: var(--primary);
+    padding: 1rem 10%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: #f7f3ee; /* soft cream text */
+}

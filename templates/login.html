@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Login | MemoraLens</title>
+   <style>
+    :root {
+        /* Photography Palette */
+        --primary: #0f3d2e;     /* Deep green */
+        --accent: #7a3e2b;      /* Terracotta */
+        --bg: #faf5ef;          /* Cream */
+        --radius: 12px;
+    }
+
+    body {
+        font-family: 'Inter', sans-serif;
+        background-color: var(--bg);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+    }
+
+    .auth-card {
+        background: #ffffff;
+        padding: 40px;
+        border-radius: var(--radius);
+        box-shadow: 0 12px 28px rgba(122, 62, 43, 0.08);
+        width: 100%;
+        max-width: 400px;
+        border: 1px solid #eadfd6; /* warm border */
+    }
+
+    h2 {
+        color: var(--primary);
+        margin-bottom: 8px;
+        text-align: center;
+    }
+
+    p {
+        color: #9b8579;   /* muted warm */
+        text-align: center;
+        margin-bottom: 30px;
+        font-size: 0.9rem;
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: 600;
+        font-size: 0.85rem;
+        color: var(--primary);
+    }
+
+    input {
+        width: 100%;
+        padding: 12px;
+        border: 1px solid #d9cfc6; /* warm input border */
+        border-radius: 8px;
+        box-sizing: border-box;
+        transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    input:focus {
+        outline: none;
+        border-color: var(--accent);
+        box-shadow: 0 0 0 3px rgba(122, 62, 43, 0.15);
+    }
+
+    .btn {
+        width: 100%;
+        padding: 12px;
+        background: var(--accent);
+        color: #ffffff;
+        border: none;
+        border-radius: 8px;
+        font-weight: 600;
+        cursor: pointer;
+        font-size: 1rem;
+    }
+
+    .btn:hover {
+        background: #8a4a35; /* lighter terracotta */
+    }
+
+    .footer-link {
+        text-align: center;
+        margin-top: 20px;
+        font-size: 0.85rem;
+        color: #9b8579;
+    }
+
+    .footer-link a {
+        color: var(--accent);
+        text-decoration: none;
+        font-weight: 600;
+    }
+
+    .flash {
+        color: #7a3e2b;
+        background: #f4e6df;
+        padding: 10px;
+        border-radius: 6px;
+        text-align: center;
+        margin-bottom: 20px;
+        font-size: 0.85rem;
+        border: 1px solid #ead1c7;
+    }
+</style>
+
+</head>
+
+<body>
+
+    <div class="auth-card">
+        <h2>Welcome Back</h2>
+        <p>Enter your credentials to access your account</p>
+
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        {% for message in messages %}
+        <div class="flash">{{ message }}</div>
+        {% endfor %}
+        {% endif %}
+        {% endwith %}
+
+        <form method="POST">
+            <div class="form-group">
+                <label>Email Address</label>
+                <input type="email" name="email" placeholder="name@company.com" required>
+            </div>
+            <div class="form-group">
+                <label>Password</label>
+                <input type="password" name="password" placeholder="••••••••" required>
+            </div>
+            <button type="submit" class="btn">Sign In</button>
+        </form>
+
+        <div class="footer-link">
+            Don't have an account? <a href="/signup">Create account</a>
+        </div>
+    </div>
+
+</body>
+
+</html>

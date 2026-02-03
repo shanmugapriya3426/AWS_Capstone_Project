@@ -1,0 +1,20 @@
+<div style="padding: 20px;">
+    <h1>Admin Panel</h1>
+    <a href="/logout">Logout</a>
+    <hr>
+    <h3>Pending Approvals</h3>
+    {% for email, p in pending.items() %}
+    <div style="border:1px solid #ccc; padding:10px; margin-bottom:5px;">
+        {{ p.name }} ({{ email }}) - 
+        <a href="/approve/{{ email }}">Approve Photographer</a>
+    </div>
+    {% endfor %}
+    
+    <h3>All Bookings</h3>
+    <table border="1" width="100%">
+        <tr><th>ID</th><th>Client</th><th>Photographer</th><th>Status</th></tr>
+        {% for b in bookings %}
+        <tr><td>{{ b.id }}</td><td>{{ b.client }}</td><td>{{ b.photographer }}</td><td>{{ b.status }}</td></tr>
+        {% endfor %}
+    </table>
+</div>

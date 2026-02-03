@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Find Photographers | MemoraLens</title>
+    <style>
+        :root {
+            --primary: #0f3d2e;
+            /* Deep green */
+            --accent: #7a3e2b;
+            /* Terracotta */
+            --bg: #faf5ef;
+            /* Cream */
+            --radius: 12px;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg);
+            margin: 0;
+            color: var(--primary);
+        }
+
+        nav {
+            background: #ffffff;
+            padding: 1rem 8%;
+            display: flex;
+            justify-content: space-between;
+            border-bottom: 1px solid #eadfd6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 30px;
+        }
+
+        .card {
+            background: #ffffff;
+            border-radius: var(--radius);
+            border: 1px solid #eadfd6;
+            overflow: hidden;
+            transition: 0.3s;
+            box-shadow: 0 6px 14px rgba(15, 61, 46, 0.05);
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 14px 28px rgba(122, 62, 43, 0.12);
+        }
+
+        .p-img {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+        }
+
+        .p-body {
+            padding: 20px;
+        }
+
+        .tag {
+            background: #f4eee8;
+            color: var(--accent);
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .price-box {
+            background: #f4eee8;
+            padding: 12px;
+            border-radius: 8px;
+            margin: 15px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: 1px solid #eadfd6;
+        }
+
+        .btn-book {
+            width: 100%;
+            background: var(--primary);
+            color: #ffffff;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .btn-book:hover {
+            background: #155a45;
+            /* slightly lighter green */
+        }
+
+        input,
+        select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #d9cfc6;
+            border-radius: 6px;
+            margin-bottom: 10px;
+            background: #ffffff;
+        }
+
+        input:focus,
+        select:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(122, 62, 43, 0.12);
+        }
+
+        /* Target all input types and select boxes within the booking form */
+        .booking-form input[type="text"],
+        .booking-form input[type="date"],
+        .booking-form select {
+            width: 100%;
+            height: 40px;
+            /* Forces a consistent height */
+            padding: 8px 12px;
+            font-size: 14px;
+            border: 1px solid #cbd5e1;
+            border-radius: 6px;
+            box-sizing: border-box;
+            /* Crucial: includes padding in the width/height */
+            margin-bottom: 15px;
+            display: block;
+        }
+
+        /* Optional: Fix for Webkit browsers (Chrome/Safari) extra date padding */
+        input[type="date"] {
+            appearance: none;
+            -webkit-appearance: none;
+            min-height: 40px;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <nav>
+        <div style="font-size: 1.4rem; font-weight: 800; color: var(--accent);">LensLease</div>
+        <div style="font-size: 0.9rem;">
+            <a href="/booking_history" style="margin-right:20px; text-decoration:none; color:var(--primary);">My
+                Bookings</a>
+            <a href="/logout" style="color:#ef4444; text-decoration:none;">Logout</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <h1 style="margin-bottom: 30px;">Available Photographers</h1>
+
+        <div class="grid">
+            {% for email, p in photographers.items() %}
+            <div class="card">
+                <img src="{{ p.portfolio[0] }}" class="p-img">
+                <div class="p-body">
+                    <span class="tag">{{ p.specialization }}</span>
+                    <h3 style="margin: 10px 0 5px 0;">{{ p.name }}</h3>
+                    <p style="color: #64748b; font-size: 0.85rem; margin: 0;">📍 {{ p.location }}</p>
+
+                    <div class="price-box">
+                        <span style="font-size: 0.8rem; color: #64748b;">Starting at</span>
+                        <span style="font-size: 1.1rem; font-weight: 800;">₹{{ p.pricing }}</span>
+                    </div>
+
+                    <form action="/book/{{ email }}" method="POST" class="booking-form">
+                        <input type="date" name="date" required>
+                        <select name="event">
+                            <option>Wedding</option>
+                            <option>Portrait</option>
+                            <option>Product Shoot</option>
+                        </select>
+                        <button type="submit" class="btn-book">Book Now</button>
+                    </form>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+</body>
+
+</html>

@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>MemoraLens | India's Premium Photography Marketplace</title>
+    <style>
+        :root {
+            /* Photography Palette */
+            --primary: #0f3d2e;
+            /* Deep green */
+            --accent: #7a3e2b;
+            /* Terracotta */
+            --bg: #faf5ef;
+            /* Cream */
+            --radius: 12px;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            background: var(--bg);
+            color: var(--primary);
+        }
+
+        /* Unified Navbar */
+        nav {
+            background: #ffffff;
+            padding: 1.2rem 8%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #eadfd6;
+            /* warm border */
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--accent);
+            /* terracotta logo */
+            letter-spacing: -1px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--primary);
+            font-weight: 500;
+            margin-left: 25px;
+            font-size: 0.95rem;
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 120px 8%;
+            text-align: center;
+            background: #ffffff;
+            border-bottom: 1px solid #eadfd6;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 20px;
+            color: var(--primary);
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: #9b8579;
+            /* muted warm text */
+            max-width: 700px;
+            margin: 0 auto 40px;
+        }
+
+        .btn-main {
+            background: var(--accent);
+            color: #ffffff;
+            padding: 16px 32px;
+            border-radius: var(--radius);
+            text-decoration: none;
+            font-weight: 600;
+            display: inline-block;
+            transition: all 0.3s;
+        }
+
+        .btn-main:hover {
+            background: #8a4a35;
+            /* lighter terracotta */
+            transform: translateY(-2px);
+            box-shadow: 0 10px 18px rgba(122, 62, 43, 0.25);
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            padding: 80px 8%;
+        }
+
+        .f-card {
+            background: #ffffff;
+            padding: 30px;
+            border-radius: var(--radius);
+            border: 1px solid #eadfd6;
+            text-align: left;
+            box-shadow: 0 6px 16px rgba(15, 61, 46, 0.06);
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <nav>
+        <div class="logo">MemoraLens</div>
+        <div class="nav-links">
+            <a href="/">Home</a>
+            <a href="{{ url_for('about') }}">About Us</a>
+            <a href="/login">User Login</a>
+            <a href="/admin/login" style="color: #94a3b8; font-size: 0.8rem;">Staff Portal</a>
+            <a href="/signup" class="btn-main" style="padding: 10px 20px; color: white;">Join Us</a>
+        </div>
+    </nav>
+
+    <div class="hero">
+        <h1>Hire the best <span style="color:var(--accent)">Photographers</span> <br>in India.</h1>
+        <p>From luxury weddings to commercial product shoots, find verified professionals who capture your vision
+            perfectly.</p>
+        <a href="/signup" class="btn-main">Get Started for Free</a>
+    </div>
+
+    <div class="features">
+        <div class="f-card">
+            <h3 style="color:var(--accent)">Verified Talent</h3>
+            <p style="color:#64748b">Every photographer is vetted by our admin team to ensure quality.</p>
+        </div>
+        <div class="f-card">
+            <h3 style="color:var(--accent)">Secure Booking</h3>
+            <p style="color:#64748b">Seamless scheduling and transparent pricing in INR.</p>
+        </div>
+        <div class="f-card">
+            <h3 style="color:var(--accent)">Instant Portfolio</h3>
+            <p style="color:#64748b">Browse high-resolution work samples before you make a choice.</p>
+        </div>
+    </div>
+    <footer style="background: #1e293b; color: #94a3b8; padding: 40px 8%; margin-top: 80px; text-align: center;">
+        <div style="margin-bottom: 20px;">
+            <span style="color: white; font-weight: 800; font-size: 1.2rem;">MemoraLens</span>
+        </div>
+        <div style="font-size: 0.85rem;">
+            &copy; 2026 MemoryLens India. All rights reserved. |
+            <a href="/admin/login" style="color: #6366f1; text-decoration: none;">Administrator Login</a>
+        </div>
+    </footer>
+</body>
+
+</html>

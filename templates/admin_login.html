@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Portal | MemoraLens</title>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #faf5ef;
+            /* Cream background */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .login-card {
+            background: #ffffff;
+            padding: 40px;
+            border-radius: 12px;
+            width: 100%;
+            max-width: 360px;
+            box-shadow: 0 16px 30px rgba(122, 62, 43, 0.12);
+            border: 1px solid #eadfd6;
+        }
+
+        h2 {
+            margin: 0 0 10px 0;
+            color: #0f3d2e;
+            /* Deep green */
+            text-align: center;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 20px;
+            border: 1px solid #d9cfc6;
+            border-radius: 8px;
+            box-sizing: border-box;
+            background: #ffffff;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #7a3e2b;
+            box-shadow: 0 0 0 3px rgba(122, 62, 43, 0.15);
+        }
+
+        .btn {
+            width: 100%;
+            background: #7a3e2b;
+            /* Terracotta */
+            color: #ffffff;
+            padding: 14px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background: #8a4a35;
+        }
+    </style>
+
+</head>
+
+<body>
+    <div class="login-card">
+        <div style="color: #ef4444; font-size: 0.7rem; font-weight: 800; margin-bottom: 10px;">SECURE ACCESS</div>
+        <h2>Admin Login</h2>
+        <p style="color: #64748b; font-size: 0.9rem; margin-bottom: 25px;">Enter system passcode to continue.</p>
+
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        <div style="color: #ef4444; margin-bottom: 15px; font-size: 0.8rem;">{{ messages[0] }}</div>
+        {% endif %}
+        {% endwith %}
+
+        <form method="POST">
+            <input type="email" name="email" placeholder="Admin Email" required>
+            <input type="password" name="password" placeholder="Passcode" required>
+            <button type="submit" class="btn">Login to Console</button>
+        </form>
+        <div style="margin-top: 20px; text-align: center;"><a href="/"
+                style="color: #64748b; font-size: 0.8rem; text-decoration: none;">← Website Home</a></div>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Profile | MemoraLens</title>
+    <style>
+        :root {
+            --primary: #0f3d2e;
+            /* Deep green */
+            --accent: #7a3e2b;
+            /* Terracotta */
+            --bg: #faf5ef;
+            /* Cream */
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg);
+            display: flex;
+            justify-content: center;
+            padding: 50px 0;
+            color: var(--primary);
+        }
+
+        .form-card {
+            background: #ffffff;
+            padding: 40px;
+            border-radius: 12px;
+            width: 100%;
+            max-width: 500px;
+            border: 1px solid #eadfd6;
+            box-shadow: 0 10px 25px rgba(122, 62, 43, 0.08);
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            color: var(--primary);
+        }
+
+        input,
+        select {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 20px;
+            border: 1px solid #d9cfc6;
+            border-radius: 8px;
+            box-sizing: border-box;
+            background: #ffffff;
+        }
+
+        input:focus,
+        select:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(122, 62, 43, 0.15);
+        }
+
+        .btn-save {
+            width: 100%;
+            background: var(--accent);
+            color: #ffffff;
+            padding: 14px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .btn-save:hover {
+            background: #8a4a35;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <div class="form-card">
+        <h2 style="margin-top:0;">Manage Professional Profile</h2>
+        <p style="color:#64748b; font-size: 0.9rem; margin-bottom: 30px;">This information is visible to potential
+            clients.</p>
+
+        <form method="POST">
+            <label>Full Display Name</label>
+            <input type="text" name="name" value="{{ p.name }}" required>
+
+            <label>Specialization</label>
+            <select name="specialization">
+                <option value="Wedding" {% if p.specialization=='Wedding' %}selected{% endif %}>Wedding</option>
+                <option value="Portrait" {% if p.specialization=='Portrait' %}selected{% endif %}>Portrait</option>
+                <option value="Product" {% if p.specialization=='Product' %}selected{% endif %}>Product Shoot</option>
+            </select>
+
+            <label>Base Price (₹)</label>
+            <input type="number" name="pricing" value="{{ p.pricing }}" required>
+
+            <label>City Location</label>
+            <input type="text" name="location" value="{{ p.location }}" required>
+
+            <label>Add Portfolio Image (URL)</label>
+            <input type="text" name="portfolio_url" placeholder="https://example.com/my-photo.jpg">
+
+            <button type="submit" class="btn-save">Save Changes</button>
+        </form>
+
+        <div style="text-align: center; margin-top: 20px;">
+            <a href="/photographer_dashboard" style="color:#64748b; text-decoration:none; font-size:0.85rem;">← Back to
+                Dashboard</a>
+        </div>
+    </div>
+
+</body>
+
+</html>

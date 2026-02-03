@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Console | MemoraLens</title>
+    <style>
+        :root {
+            /* Photography Palette */
+            --primary: #0f3d2e;
+            /* Deep green */
+            --accent: #7a3e2b;
+            /* Terracotta */
+            --danger: #b4533c;
+            /* Warm terracotta-red (alerts/errors) */
+            --bg: #faf5ef;
+            /* Cream */
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg);
+            margin: 0;
+            display: flex;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 260px;
+            background: var(--primary);
+            color: white;
+            height: 100vh;
+            position: fixed;
+            padding: 30px 20px;
+        }
+
+        .sidebar h2 {
+            font-size: 1.5rem;
+            margin-bottom: 40px;
+            color: white;
+        }
+
+        .sidebar a {
+            color: #ffffff;
+            text-decoration: none;
+            display: block;
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+        }
+
+        .sidebar a:hover {
+            background: #334155;
+            color: white;
+        }
+
+        /* Main Content */
+        .main {
+            margin-left: 260px;
+            padding: 40px;
+            width: 100%;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            border: 1px solid #e2e8f0;
+        }
+
+        .stat-card h4 {
+            margin: 0;
+            color: #64748b;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+        }
+
+        .stat-card div {
+            font-size: 1.8rem;
+            font-weight: 800;
+            margin-top: 10px;
+        }
+
+        .table-container {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            border: 1px solid #e2e8f0;
+            margin-bottom: 30px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th {
+            text-align: left;
+            padding: 12px;
+            border-bottom: 2px solid #f1f5f9;
+            color: #64748b;
+            font-size: 0.75rem;
+        }
+
+        td {
+            padding: 15px 12px;
+            border-bottom: 1px solid #f1f5f9;
+            font-size: 0.9rem;
+        }
+
+        .btn-sm {
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            text-decoration: none;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .btn-approve {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .btn-reject {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        .btn-delete {
+            color: var(--danger);
+            border: 1px solid var(--danger);
+        }
+
+        /* Flash message style */
+        .alert {
+            padding: 15px;
+            background: #dcfce7;
+            color: #166534;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border: 1px solid #bbf7d0;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="sidebar">
+        <h2>MemoraLens Admin</h2>
+        <a href="#stats">Dashboard Home</a>
+        <a href="#pending">Pending Requests</a>
+        <a href="#users">Manage Users</a>
+        <hr style="border: 0.5px solid #334155; margin: 20px 0;">
+        <a href="/logout" style="color: #ffffff;">Logout</a>
+    </div>
+
+    <div class="main">
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        {% for message in messages %}
+        <div class="alert">{{ message }}</div>
+        {% endfor %}
+        {% endif %}
+        {% endwith %}
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <h3>Total Users</h3>
+                <p class="stat-number">{{ total_users }}</p>
+            </div>
+
+            <div class="stat-card">
+                <h3>Pending Approval</h3>
+                <p class="stat-number">{{ pending_approvals }}</p>
+            </div>
+
+            <div class="stat-card">
+                <h3>System Bookings</h3>
+                <p class="stat-number">{{ total_bookings }}</p>
+            </div>
+        </div>
+
+        <div class="table-container" id="pending">
+            <h3 style="margin-top:0">Pending Photographer Registrations</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Specialization</th>
+                        <th>Location</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for email, p in pending.items() %}
+                    <tr>
+                        <td><b>{{ p.name }}</b><br><small>{{ email }}</small></td>
+                        <td>{{ p.specialization }}</td>
+                        <td>{{ p.location }}</td>
+                        <td>
+                            <a href="/admin/approve/{{ email }}" class="btn-sm btn-approve">Approve</a>
+                            <a href="/admin/reject/{{ email }}" class="btn-sm btn-reject">Reject</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <div class="table-container" id="users">
+            <h3>User Management</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Role</th>
+                        <th>Email</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for email, u in users.items() %}
+                    <tr>
+                        <td>{{ u.name }}</td>
+                        <td><span style="text-transform: capitalize;">{{ u.role }}</span></td>
+                        <td>{{ email }}</td>
+                        <td>
+                            {% if u.role != 'admin' %}
+                            <a href="/admin/delete_user/{{ email }}" class="btn-sm btn-delete"
+                                onclick="return confirm('Block this user?')">Block/Remove</a>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</body>
+
+</html>

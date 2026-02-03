@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Photographer Dashboard | MemoraLens</title>
+    <style>
+        :root {
+            /* Photography Palette */
+            --primary: #0f3d2e;
+            /* Deep green */
+            --accent: #7a3e2b;
+            /* Terracotta */
+            --danger: #b4533c;
+            /* Warm terracotta-red (alerts/errors) */
+            --bg: #faf5ef;
+            /* Cream */
+        }
+
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg);
+            margin: 0;
+            color: var(--primary);
+        }
+
+        nav {
+            background: white;
+            padding: 1rem 8%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .card {
+            background: white;
+            border-radius: var(--radius);
+            border: 1px solid #e2e8f0;
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th {
+            text-align: left;
+            padding: 12px;
+            color: #64748b;
+            border-bottom: 2px solid #f1f5f9;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+        }
+
+        td {
+            padding: 15px 12px;
+            border-bottom: 1px solid #f1f5f9;
+            font-size: 0.95rem;
+        }
+
+        .btn {
+            padding: 8px 16px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.85rem;
+            display: inline-block;
+        }
+
+        .btn-accept {
+            background: #dcfce7;
+            color: #166534;
+            margin-right: 10px;
+            border: 1px solid #bbf7d0;
+        }
+
+        .btn-reject {
+            background: #fee2e2;
+            color: #991b1b;
+            border: 1px solid #fecaca;
+        }
+
+        .btn-profile {
+            background: var(--accent);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 8px;
+        }
+
+        .status-badge {
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 700;
+        }
+
+        .status-Pending {
+            background-color: #fef3c7;
+            color: #92400e;
+        }
+
+        .status-Confirmed {
+            background-color: #dcfce7;
+            color: #166534;
+        }
+
+        .status-Rejected {
+            background-color: #fee2e2;
+            color: #991b1b;
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav>
+        <div style="font-size: 1.4rem; font-weight: 800; color: var(--accent);">MemoraLens</div>
+        <div style="display: flex; align-items: center;">
+            <a href="/photographer/profile"
+                style="margin-right:20px; text-decoration:none; color:var(--primary); font-weight: 500;">Manage
+                Profile</a>
+            <a href="/logout" style="color:#ef4444; text-decoration:none; font-weight: 500;">Logout</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div style="display:flex; justify-content: space-between; align-items: center; margin-bottom: 30px;">
+            <div>
+                <h2 style="margin: 0;">Incoming Bookings</h2>
+                <p style="color: #64748b; margin: 5px 0 0 0;">Manage your schedule and client requests.</p>
+            </div>
+            <a href="/photographer/profile" class="btn-profile">Update Portfolio</a>
+        </div>
+
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        {% for message in messages %}
+        <div
+            style="background: #dcfce7; color: #166534; padding: 15px; border-radius: 8px; margin-bottom: 20px; border: 1px solid #bbf7d0;">
+            {{ message }}
+        </div>
+        {% endfor %}
+        {% endif %}
+        {% endwith %}
+
+        <div class="card">
+            {% if not bookings %}
+            <p style="text-align:center; color:#64748b; padding: 40px;">No booking requests found yet.</p>
+            {% else %}
+            <table>
+                <thead>
+                    <tr>
+                        <th>Client</th>
+                        <th>Event Details</th>
+                        <th>Date</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for b in bookings %}
+                    <tr>
+                        <td><b>{{ users[b.client].name }}</b><br><small style="color:#64748b;">{{ b.client }}</small>
+                        </td>
+                        <td>{{ b.event }}</td>
+                        <td>{{ b.date }}</td>
+                        <td>
+                            <span class="status-badge status-{{ b.status }}">
+                                {{ b.status }}
+                            </span>
+                        </td>
+                        <td>
+                            {% if b.status == 'Pending' %}
+                            <a href="/booking/action/{{ b.id }}/accept" class="btn btn-accept">Accept</a>
+                            <a href="/booking/action/{{ b.id }}/reject" class="btn btn-reject">Reject</a>
+                            {% elif b.status == 'Confirmed' %}
+                            <a href="/booking/action/{{ b.id }}/complete" class="btn"
+                                style="background: #e0f2fe; color: #0369a1; border: 1px solid #bae6fd;">
+                                Mark as Completed
+                            </a>
+                            {% else %}
+                            <span style="color: #64748b;">No actions available</span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            {% endif %}
+        </div>
+    </div>
+
+</body>
+
+</html>
